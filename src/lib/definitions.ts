@@ -17,6 +17,11 @@ export const SignupFormSchema = z.object({
     .trim(),
 });
 
+export const LoginFormSchema = z.object({
+  email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
+  password: z.string().min(8, { message: 'Be at least 8 characters long' }),
+});
+
 export type FormState =
   | {
       errors?: {
@@ -32,3 +37,10 @@ export type SessionPayload = {
   userId: string;
   expiresAt: Date;
 };
+
+export type ProfileFormState =
+  | {
+      error?: string;
+      success?: string;
+    }
+  | undefined;

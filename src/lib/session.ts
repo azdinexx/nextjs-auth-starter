@@ -36,3 +36,26 @@ export async function createSession(userId: string) {
     path: '/',
   });
 }
+
+export async function deleteSession() {
+  cookies().set('session', '', {
+    httpOnly: true,
+    secure: true,
+    expires: new Date(0),
+    sameSite: 'lax',
+    path: '/',
+  });
+}
+
+export async function isLogged() {
+  const session = cookies().get('session');
+  if (!session) return false;
+  return Boolean(await decrypt(session.value));
+}
+
+export async function getUserId() {
+  const session = cookies().get('session');
+  if (!session) return null;
+  const payload = await decrypt(session.value);
+  return payload?.userId;
+}
