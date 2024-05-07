@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { db } from '@/lib/db';
+
 export async function getUser(userId: string) {
-  const user = await prisma.user.findUnique({
+  const user = await db.user.findUnique({
     where: {
       id: userId,
     },
@@ -10,7 +10,7 @@ export async function getUser(userId: string) {
 }
 
 export async function updateUser(userId: string, name: string) {
-  const user = await prisma.user.update({
+  const user = await db.user.update({
     where: {
       id: userId,
     },

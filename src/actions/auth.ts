@@ -6,9 +6,8 @@ import {
 } from '@/lib/definitions';
 import { createSession, deleteSession } from '../lib/session';
 import { redirect } from 'next/navigation';
+import { db } from '@/lib/db';
 
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
 export async function signup(state: FormState, formData: FormData) {
   // Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
@@ -27,7 +26,7 @@ export async function signup(state: FormState, formData: FormData) {
   const { name, email, password } = validatedFields.data;
 
   // Call the provider or db to create a user...
-  const user = await prisma.user.create({
+  const user = await db.user.create({
     data: {
       name,
       email,
@@ -64,7 +63,7 @@ export async function login(state: FormState, formData: FormData) {
   const { email, password } = validatedFields.data;
 
   // Call the provider or db to create a user...
-  const user = await prisma.user.findFirst({
+  const user = await db.user.findFirst({
     where: {
       email,
       password,

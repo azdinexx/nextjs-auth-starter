@@ -11,7 +11,7 @@ export async function profileUpdate(
   const userId = await getUserId();
   const response = await updateUser(userId as string, name);
 
-  if (response) {
+  if (response.name === name) {
     return {
       success: 'Profile updated successfully.',
     };
